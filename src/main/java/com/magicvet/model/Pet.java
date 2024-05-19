@@ -47,4 +47,15 @@ public abstract class Pet {
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "type='" + type + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", name='" + name + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                '}';
+    }
 }
