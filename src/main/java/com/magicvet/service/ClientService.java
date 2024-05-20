@@ -9,21 +9,24 @@ import java.util.regex.Pattern;
 public class ClientService {
 
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    private static final String NAME_PATTERN = "^[a-zA-Z-]{3,}$";
 
     public Client registerNewClient() {
         Client client = null;
 
         System.out.println("Please, provide client details.");
         System.out.print("Email: ");
-        String email  = Main.SCANNER.nextLine();
+        String email = Main.SCANNER.nextLine();
 
         if (isEmailValid(email)) {
             client = buildClient(email);
-            System.out.println("New client: " + client.getFirstName() + " "
-                    + client.getLastName() + " ("
-                    + client.getEmail() + ")");
+            if (client != null) {
+                System.out.println("New client: " + client.getFirstName() + " "
+                        + client.getLastName() + " ("
+                        + client.getEmail() + ")");
+            }
         } else {
-            System.out.println("Provide emeil is invalid.");
+            System.out.println("Provided email is invalid.");
         }
 
         return client;
@@ -34,10 +37,22 @@ public class ClientService {
         client.setEmail(email);
 
         System.out.print("First name: ");
-        client.setFirstName(Main.SCANNER.nextLine());
+        String firstName = Main.SCANNER.nextLine();
+
+        if (!isNameValid(firstName)) {
+            System.out.println("Invalid first name. It should contain at least 3 characters and only Latin letters or hyphens.");
+            return null;
+        }
+        client.setFirstName(firstName);
 
         System.out.print("Last name: ");
-        client.setLastName(Main.SCANNER.nextLine());
+        String lastName = Main.SCANNER.nextLine();
+
+        if (!isNameValid(lastName)) {
+            System.out.println("Invalid last name. It should contain at least 3 characters and only Latin letters or hyphens.");
+            return null;
+        }
+        client.setLastName(lastName);
 
         return client;
     }
@@ -45,6 +60,12 @@ public class ClientService {
     private static boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private static boolean isNameValid(String name) {
+        Pattern pattern = Pattern.compile(NAME_PATTERN);
+        Matcher matcher = pattern.matcher(name);
         return matcher.matches();
     }
 }
