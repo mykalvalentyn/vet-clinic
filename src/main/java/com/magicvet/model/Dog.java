@@ -40,8 +40,8 @@ public class Dog extends Pet {
 
     @Override
     public String toString() {
-        return "Dog{" +
-                "type='" + getType() + '\'' +
+        return "Pet {" +
+                "type=" + getType() + '\'' +
                 ", sex='" + getSex() + '\'' +
                 ", age='" + getAge() + '\'' +
                 ", name='" + getName() + '\'' +
