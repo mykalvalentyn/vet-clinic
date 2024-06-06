@@ -1,10 +1,27 @@
 package main.java.com.magicvet.model;
 
+import static java.time.chrono.JapaneseEra.values;
+import static main.java.com.magicvet.model.Dog.Size.UNKNOWN;
+
 public class Dog extends Pet {
 
     private Size size;
 
-    public Dog() { }
+    public Dog() {
+    }
+
+    @Override
+    public String toString() {
+        return "Pet {"
+                + "type = " + getType()
+                + ", sex = " + getSex()
+                + ", age = " + getAge()
+                + ", name = " + getName()
+                + ", size = " + getSize()
+                + ", ownerName = " + getOwnerName()
+                + ", registrationDate = " + getRigistrationDate().format(FORMATTER)
+                + "}";
+    }
 
     public Dog(Size size) {
         this.size = size;
@@ -14,8 +31,9 @@ public class Dog extends Pet {
         this.size = size;
     }
 
-    public Size getSize() { return size; }
-
+    public Size getSize() {
+        return size;
+    }
 
 
     public enum Size {
@@ -33,20 +51,21 @@ public class Dog extends Pet {
             this.value = value;
         }
 
+        public static Size fromString(String value) {
+            for (Size size : values()) {
+                if (size.toString().equals(value)) {
+                    return size;
+                }
+            }
+
+            System.out.println("Unable to parse value '" + value + "'. Using default value: " + UNKNOWN);
+
+            return UNKNOWN;
+        }
+
         public int getValue() {
             return value;
         }
     }
 
-    @Override
-    public String toString() {
-        return "Pet {" +
-                "type=" + getType() + '\'' +
-                ", sex='" + getSex() + '\'' +
-                ", age='" + getAge() + '\'' +
-                ", name='" + getName() + '\'' +
-                ", ownerName='" + getOwnerName() + '\'' +
-                ", size='" + size + '\'' +
-                '}';
-    }
 }
